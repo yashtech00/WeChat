@@ -43,14 +43,3 @@ export const Login = async(req:any,res:any) => {
     }
 }
 
-export const message = async(req:any,res:any) => {
-    try {
-
-
-        const chat = await ChatModel.findById();
-        return res.status(200).json({message:"Fetch the messages"})
-            
-    } catch (e) {
-        
-    }
-}
