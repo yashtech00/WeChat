@@ -9,14 +9,22 @@ export const useAuth = () => {
 
     const Backend_url = import.meta.env.VITE_APP_BACKEND_URL;
     useEffect(() => {
-        const fetch = async() => {
-            const res = await axios.get(`${Backend_url}/`)
+        const fetch = async () => {
+            try {
+                setLoading(true);
+                const res = await axios.get(`${Backend_url}/user/me`, { withCredentials: true });
+                setAuthUser(res.data.data);
+                setLoading(false)
+            } catch (e:any) {
+                console.error("Error", e.message);
+                setLoading(true);
+            }
         }
         fetch();    
     },[])
     
     
     return (
-
+        {authUser,loading, setAuthUser}  
     )
 }

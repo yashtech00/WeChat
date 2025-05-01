@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks";
+
 import toast from "react-hot-toast";
+import { useAuth } from "../hooks";
 
 export const Auth = ({ type }: { type: "signup" | "login" }) => {
     const { setAuthUser } = useAuth(); 
@@ -35,7 +36,7 @@ export const Auth = ({ type }: { type: "signup" | "login" }) => {
             setPassword("");
             setFullname("");
             console.log(res, "login info");
-          navigate("/dashboard");
+          navigate("/chat");
           toast.success(`${type} successfully`)
         } catch (e: any) {
           console.error(e.message);
