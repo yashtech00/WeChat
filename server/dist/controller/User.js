@@ -37,7 +37,7 @@ exports.Signup = Signup;
 const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
-        const user = yield UserSchema_1.default.findOne(email);
+        const user = yield UserSchema_1.default.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: "User Not Found" });
         }
@@ -46,7 +46,7 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(404).json({ message: "Wrong Password" });
         }
         (0, generateToken_1.generateToken)(user._id.toString(), res);
-        return res.status(200).json({ message: "User account created successfully" }, { data: user });
+        return res.status(200).json({ message: "Login successfully" }, { data: user });
     }
     catch (e) {
         console.error(e.message);

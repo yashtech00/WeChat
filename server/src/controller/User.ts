@@ -27,7 +27,7 @@ export const Signup = async(req:any,res:any) => {
 export const Login = async(req:any,res:any) => {
     try {
         const { email, password } = req.body;
-        const user = await UserModel.findOne(email);
+        const user = await UserModel.findOne({email});
         if (!user) {
             return res.status(404).json({ message: "User Not Found" });
         }
@@ -36,7 +36,7 @@ export const Login = async(req:any,res:any) => {
             return res.status(404).json({ message: "Wrong Password" });
         }
         generateToken(user._id.toString(), res);
-        return res.status(200).json({ message: "User account created successfully" }, { data: user });
+        return res.status(200).json({ message: "Login successfully" }, { data: user });
     } catch (e:any) {
         console.error(e.message);
         return res.status(500).json({ message: "Internal server error while Login" });

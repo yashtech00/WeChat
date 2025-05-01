@@ -18,20 +18,26 @@ const clients = {};
 const handleSocketConnection = (ws, userId) => {
     clients[userId] = ws;
     ws.on("message", (message) => __awaiter(void 0, void 0, void 0, function* () {
-        const msg = JSON.parse(message.toString());
-        if (msg.type === "private_message") {
-            const newMessage = yield ChatSchema_1.default.create({
-                sender: userId,
-                receiver: msg.receiverId,
-                content: msg.content
-            });
-            const receiverSocket = clients[msg.receiverId];
-            if (receiverSocket) {
-                receiverSocket.send(JSON.stringify({
-                    type: "new_message",
-                    content: newMessage
-                }));
+        try {
+            const msg = JSON.parse(message.toString());
+            if (msg.type === "private_message") {
+                const newMessage = yield ChatSchema_1.default.create({
+                    sender: userId,
+                    receiver: msg.receiverId,
+                    content: msg.content,
+                });
+                const receiverSocket = clients[msg.receiverId];
+                if (receiverSocket) {
+                    receiverSocket.send(JSON.stringify({
+                        type: "new_message",
+                        content: newMessage,
+                    }));
+                }
             }
+        }
+        catch (e) {
+            console.error("Error:", e.message);
+            ws.send(JSON.stringify({ type: "error", message: "Server error" }));
         }
     }));
     ws.on("close", () => {
