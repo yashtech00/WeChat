@@ -64,3 +64,30 @@ export const GetMe = async(req:any,res:any) => {
         res.status(500).json({message:"Internal server error while fetching user details"})
     }
 }
+
+export const Followers = async (req: any, res: any) => {
+    try {
+        const user = await UserModel.find();
+        res.status(200).json({ message: "fetch followers" }, { data: user });
+    } catch (e:any) {
+        console.error("Error",e.message);
+        res.status(500).json({message:"Internal server error while fetching user"})
+    }
+}
+
+export const Follow = async (req: any, res: any) => {
+    try {
+        const { userId } = req.params;
+        const user = await UserModel.findById(res.user.id);
+      
+        if (!user?.following?.includes(userId)) {
+            user?.following?.push(userId)
+            await user?.save();
+        }
+
+        res.status(200).json({ message: "fetch followers" }, { data: user });
+    } catch (e:any) {
+        console.error("Error",e.message);
+        res.status(500).json({message:"Internal server error while fetching user"})
+    }
+}

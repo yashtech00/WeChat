@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Login = exports.Signup = void 0;
+exports.Follow = exports.Followers = exports.GetMe = exports.Logout = exports.Login = exports.Signup = void 0;
 const generateToken_1 = require("../lib/generateToken");
 const UserSchema_1 = __importDefault(require("../model/UserSchema"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
@@ -54,3 +54,54 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.Login = Login;
+const Logout = (req, res) => {
+    try {
+        res.cookie("jwt", "", { maxAge: 0 });
+        res.status(200).json({ message: "Logout Successfully" });
+    }
+    catch (e) {
+        console.error(e.message);
+        res.status(500).json({ message: "Internal server error while logout" });
+    }
+};
+exports.Logout = Logout;
+const GetMe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.user.id;
+        const user = yield UserSchema_1.default.findById({ userId }).select("-password");
+        res.status(200).json({ message: "fetch user details" }, { data: user });
+    }
+    catch (e) {
+        console.error("Error:", e.message);
+        res.status(500).json({ message: "Internal server error while fetching user details" });
+    }
+});
+exports.GetMe = GetMe;
+const Followers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield UserSchema_1.default.find();
+        res.status(200).json({ message: "fetch followers" }, { data: user });
+    }
+    catch (e) {
+        console.error("Error", e.message);
+        res.status(500).json({ message: "Internal server error while fetching user" });
+    }
+});
+exports.Followers = Followers;
+const Follow = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    try {
+        const { userId } = req.params;
+        const user = yield UserSchema_1.default.findById(res.user.id);
+        if (!((_a = user === null || user === void 0 ? void 0 : user.following) === null || _a === void 0 ? void 0 : _a.includes(userId))) {
+            (_b = user === null || user === void 0 ? void 0 : user.following) === null || _b === void 0 ? void 0 : _b.push(userId);
+            yield (user === null || user === void 0 ? void 0 : user.save());
+        }
+        res.status(200).json({ message: "fetch followers" }, { data: user });
+    }
+    catch (e) {
+        console.error("Error", e.message);
+        res.status(500).json({ message: "Internal server error while fetching user" });
+    }
+});
+exports.Follow = Follow;
