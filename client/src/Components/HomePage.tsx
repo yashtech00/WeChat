@@ -1,11 +1,18 @@
-import { Footer } from "./Footer"
-import { HeroSection } from "./HeroSection"
+import Features from "./Features";
+import { Footer } from "./Footer";
+import Hero from "./HeroSection";
+import Navbar from "./NavBar";
 
-export const HomePage=()=> {
-    return (
-        <div>
-            <HeroSection />
-            <Footer/>
-        </div>
-    )
-}
+
+const Index = () => {
+  return (
+    <div className="min-h-screen bg-black">
+      <Navbar />
+      <Hero />
+      <Features />
+      <Footer />
+    </div>
+  );
+};
+
+export default Index;

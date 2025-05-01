@@ -68,6 +68,9 @@ exports.Logout = Logout;
 const GetMe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.user.id;
+        if (!req.user) {
+            return res.status(200).json({ data: null });
+        }
         const user = yield UserSchema_1.default.findById({ userId }).select("-password");
         res.status(200).json({ message: "fetch user details" }, { data: user });
     }

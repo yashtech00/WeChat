@@ -57,6 +57,9 @@ export const GetMe = async(req:any,res:any) => {
   
     try {
         const userId = req.user.id;
+        if (!req.user) {
+            return res.status(200).json({ data: null });
+        }
         const user = await UserModel.findById({ userId }).select("-password");
         res.status(200).json({ message: "fetch user details" }, { data: user });
     } catch (e:any) {
