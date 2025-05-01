@@ -1,7 +1,11 @@
 import { Auth } from "../Components/Auth";
 
-export default function Login() {
+
+export default function Signup() {
     return (
-        <Auth/>
+        <div className="">
+           
+                    <Auth type={"login"} />
+        </div>
     )
 }

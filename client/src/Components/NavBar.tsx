@@ -2,6 +2,9 @@
 import  { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Star } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../hooks";
+import axios from "axios";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -19,6 +22,27 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [scrolled]);
+    
+    const { authUser, loading } = useAuth();
+
+    if (loading) {
+        return (
+            <div>
+                loading
+            </div>
+        )
+    }
+
+    const Backend_Url = import.meta.env.VITE_APP_BACKEND_URL;
+
+
+    const handleLogout = async () => {
+        try {
+            const res = await axios.post(`${Backend_Url}/user/logout`, {}, { withCredentials: true })
+        } catch (e:any) {
+            console.error(e.message);
+        }
+    }
 
   return (
     <header
@@ -37,9 +61,23 @@ const Navbar = () => {
           <Button variant="ghost" className="hidden md:flex gap-2 items-center hover:bg-orange-600 text-orange-600">
             <Star className="h-5 w-5" />
             <span>Give us a star</span>
-          </Button>
-          <Button variant="ghost" className="hover:text-orange-600 text-white">Login</Button>
-          <Button className="bg-orange-600 hover:bg-orange-600-dark">Sign Up</Button>
+                  </Button>
+                  {!authUser ? (
+                      <div>
+                          <Link to={"/login"}>
+                              <Button variant="ghost" className="hover:text-orange-600 text-white">Login</Button>
+                          </Link>
+
+                          <Link to={"/signup"}>
+                              <Button className="bg-orange-600 hover:bg-orange-600-dark">Sign Up</Button>
+                              </Link>
+                        </div>
+                  ) : (
+                          <div>
+                           <Button className="bg-orange-600 hover:bg-orange-600-dark" onClick={handleLogout}>Logout</Button >   
+                          </div>
+                  )}
+          
         </div>
       </div>
     </header>

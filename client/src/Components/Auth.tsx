@@ -46,10 +46,10 @@ export const Auth = ({ type }: { type: "signup" | "login" }) => {
 
     return (
         <div className="flex justify-center items-center min-h-screen text-white">
-            <div className="absolute top-4 left-4 font-bold text-4xl">WeChat</div>
-            <div className="border border-gray-700 rounded-lg shadow-lg p-6 w-full max-w-md">
-                <h1 className="text-2xl font-bold text-center mb-6">
-                    {type === "signup" ? "Signup" : "Login"}
+            <div className="absolute top-4 left-4 font-bold text-4xl text-orange-700">WeChat</div>
+            <div className="  p-6 w-full max-w-md">
+                <h1 className="text-2xl font-bold  mb-6">
+                    {type === "signup" ? "Sign up" : "Sign in"}
                 </h1>
                 <form
                     className="space-y-4"
@@ -74,7 +74,7 @@ export const Auth = ({ type }: { type: "signup" | "login" }) => {
                     <div>
                         <label className="block text-sm font-medium mb-1">Email</label>
                         <input
-                            className="w-full px-3 py-2 border border-gray-600 rounded-md bg-black text-white"
+                            className="w-full px-3 py-2 border border-gray-600 rounded-md bg-black text-orange-800"
                             placeholder="Enter Email"
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
@@ -84,16 +84,15 @@ export const Auth = ({ type }: { type: "signup" | "login" }) => {
                     <div>
                         <label className="block text-sm font-medium mb-1">Password</label>
                         <input
-                            className="w-full px-3 py-2 border border-gray-600 rounded-md bg-black text-white"
-                            placeholder="Enter Password"
-                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-600 rounded-md bg-black text-orange-800"
+                            placeholder="Enter Password "                            onChange={(e) => setPassword(e.target.value)}
                             value={password}
                             type="password"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-2 mt-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold transition duration-200"
+                        className="w-full py-2 mt-4 bg-orange-600 hover:bg-orange-700 rounded-md text-white font-semibold transition duration-200"
                     >
                         {type === "signup" ? "Sign Up" : "Log In"}
                     </button>
