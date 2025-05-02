@@ -16,7 +16,7 @@ export const Signup = async(req:any,res:any) => {
             email,
             password:hashedPassword
         });
-        generateToken(user._id.toString(), res);
+        generateToken(user._id, res);
         return res.status(200).json({ 
             message: "User account created successfully", 
             data: user 
@@ -39,7 +39,7 @@ export const Login = async(req:any,res:any) => {
         if (!isPassword) {
             return res.status(404).json({ message: "Wrong Password" });
         }
-        generateToken(user._id.toString(), res);
+        generateToken(user._id, res);
         return res.status(200).json({ message: "Login successfully" }, { data: user });
     } catch (e:any) {
         console.error(e.message);
@@ -64,7 +64,9 @@ export const GetMe = async(req:any,res:any) => {
         if (!req.user) {
             return res.status(200).json({ data: null });
         }
-        const user = await UserModel.findById({ userId }).select("-password");
+        console.log(userId,"get me user id");
+        
+        const user = await UserModel.findById(userId).select("-password");
         res.status(200).json({ message: "fetch user details" }, { data: user });
     } catch (e:any) {
         console.error("Error:",e.message);

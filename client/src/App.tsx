@@ -25,16 +25,18 @@ function App() {
 
   return (
     <BrowserRouter>
+      <div className='bg-black'>
       <Routes>
-        
+          
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/chat' element={<Layout><Chat /></Layout>} />
         <Route path='/chat/:id' element={<Layout><PersonalChat /></Layout>} />
         <Route path='/follow' element={<Layout><Follow /></Layout>} />
-
-      </Routes>
+       
+        </Routes>
+        </div>
       <Toaster
       position='bottom-center'
       />

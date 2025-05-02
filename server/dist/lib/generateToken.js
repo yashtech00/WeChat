@@ -6,12 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const generateToken = (userId, res) => {
-    const token = jsonwebtoken_1.default.sign({ userId }, process.env.JWT_SECRET || "yash", { expiresIn: '24h' });
+    const token = jsonwebtoken_1.default.sign({ userId }, process.env.JWT_SECRET || "yash", {
+        expiresIn: "24h",
+    });
     res.cookie("jwt", token, {
         httpOnly: true,
         sameSite: "none",
         secure: true,
-        maxAge: 24 * 60 * 60 * 1000
+        maxAge: 24 * 60 * 60 * 1000,
     });
     console.log(token, "generated token");
     return token;

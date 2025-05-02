@@ -13,11 +13,11 @@ const Authenticate = async(req:any,res:any,next:any) => {
         if (!process.env.JWT_SECRET) {
             throw new Error("JWT_SECRET is not defined in environment variables");
         }
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-        if (!decode || typeof decode === "string") {
+        const decode = jwt.verify(token, process.env.JWT_SECRET) as { userId: string };
+        if (!decode || !decode.userId) {
             return res.status(401).json({message:"Token is not valid"})
         }
-        const user = await UserModel.findById(decode.userId).select("-password")
+        const user = await UserModel.findById(decode.userId).select("-password");
         if (!user) {
             return res.status(401).json("User not found")
         }

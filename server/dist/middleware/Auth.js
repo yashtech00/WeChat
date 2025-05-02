@@ -26,7 +26,7 @@ const Authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
             throw new Error("JWT_SECRET is not defined in environment variables");
         }
         const decode = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-        if (!decode || typeof decode === "string") {
+        if (!decode || !decode.userId) {
             return res.status(401).json({ message: "Token is not valid" });
         }
         const user = yield UserSchema_1.default.findById(decode.userId).select("-password");
