@@ -19,11 +19,12 @@ const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
 const wss = new ws_1.WebSocketServer({ server });
 const PORT = process.env.PORT || 8001;
-app.use(express_1.default.json());
 app.use((0, cors_1.default)({
     origin: "http://localhost:5173",
     credentials: true,
 }));
+app.use(express_1.default.json({ limit: "5mb" }));
+app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
 app.use("/user", UserRouter_1.default);
 app.use("/chat", MessageRoutes_1.default);

@@ -28,8 +28,8 @@ function App() {
       <Routes>
         
         <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Layout><Login /></Layout>} />
-        <Route path='/signup' element={<Layout><Signup /></Layout>} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
         <Route path='/chat' element={<Layout><Chat /></Layout>} />
         <Route path='/chat/:id' element={<Layout><PersonalChat /></Layout>} />
         <Route path='/follow' element={<Layout><Follow /></Layout>} />

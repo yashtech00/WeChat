@@ -12,14 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Authenticate = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const UserSchema_1 = __importDefault(require("../model/UserSchema"));
 const Authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = req.cookies.jwt;
+        console.log("Request cookies:", req.cookies); // Should show all cookies  
+        const token = req.cookies.jwt; // Get token from cookies  
+        console.log("Retrieved token:", token); // Focus on this log 
         if (!token) {
-            return res.status(401).json({ message: "Unauthorized" });
+            return res.status(401).json({ message: "No token,Authorization denied" });
         }
         if (!process.env.JWT_SECRET) {
             throw new Error("JWT_SECRET is not defined in environment variables");
@@ -40,4 +41,4 @@ const Authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         return res.status(500).json({ message: "Internal server error while authenticating" });
     }
 });
-exports.Authenticate = Authenticate;
+exports.default = Authenticate;

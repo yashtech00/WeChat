@@ -18,15 +18,19 @@ const UserSchema_1 = __importDefault(require("../model/UserSchema"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const Signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { username, email, password } = req.body;
+        const { fullname, username, email, password } = req.body;
         const hashedPassword = yield bcryptjs_1.default.hash(password, 10);
         const user = yield UserSchema_1.default.create({
+            fullname,
             username,
             email,
             password: hashedPassword
         });
         (0, generateToken_1.generateToken)(user._id.toString(), res);
-        return res.status(200).json({ message: "User account created successfully" }, { data: user });
+        return res.status(200).json({
+            message: "User account created successfully",
+            data: user
+        });
     }
     catch (e) {
         console.error(e.message);
